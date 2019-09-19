@@ -4,7 +4,7 @@
 	"values": [
 		{
 			"key": "HOST",
-			"value": "http://local.api.l5api",
+			"value": "http://localhost",
 			"enabled": true
 		},
 		{
@@ -15,7 +15,7 @@
 		},
 		{
 			"key": "adminPassword",
-			"value": "password",
+			"value": "secret",
 			"description": "",
 			"enabled": true
 		}

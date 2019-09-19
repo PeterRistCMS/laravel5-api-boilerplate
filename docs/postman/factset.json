@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "1413777d-a2d8-472c-843f-3c47bdd8fbbf",
+		"name": "L5 API Boilerplate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login as Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6d953560-1388-416e-8a7b-6445e9e8b1a8",
+								"exec": [
+									"const res = pm.response.json();",
+									"",
+									"pm.environment.set(\"adminJWT\", res.data.jwt);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9b4e7b33-5409-42ff-9db2-f4f2825e913a",
+								"exec": [
+									"pm.variables.set('authHeader', btoa(pm.environment.get('adminEmail') + ':' + pm.environment.get('adminPassword')));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{authHeader}}"
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/auth/jwt/token",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"auth",
+								"jwt",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6d953560-1388-416e-8a7b-6445e9e8b1a8",
+								"exec": [
+									"const res = pm.response.json();",
+									"",
+									"pm.globals.set(\"adminJWT\", res.data.jwt);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminJWT}}"
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/auth/me",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Currencies",
+			"item": [
+				{
+					"name": "EUR CHF",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminJWT}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/currencies/convert/EUR/CHF/10",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"currencies",
+								"convert",
+								"EUR",
+								"CHF",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CHF GBP",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{adminJWT}}"
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/currencies/convert/CHF/GBP/5",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"currencies",
+								"convert",
+								"CHF",
+								"GBP",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

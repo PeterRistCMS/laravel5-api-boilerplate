@@ -20,3 +20,4 @@ _ide_helper.php
 
 # mac os
 .DS_Store
+/storage/laradock/postgres/

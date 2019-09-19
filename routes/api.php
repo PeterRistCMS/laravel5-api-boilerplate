@@ -72,5 +72,10 @@ $api->version('v1', ['middleware' => ['api']], function ($api) {
         $api->group(['prefix' => 'roles'], function ($api) {
             $api->get('/', 'App\Http\Controllers\RoleController@getAll');
         });
+
+        $api->group(['prefix' => 'currencies'], function ($api) {
+            $api->get('/convert/{source}/{target}/{amount}', 'App\Http\Controllers\CurrencyController@convert');
+        });
+
     });
 });

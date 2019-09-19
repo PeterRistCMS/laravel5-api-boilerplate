@@ -4,7 +4,7 @@ services:
 
 # Workspace Container
     workspace:
-      container_name: your_project_workspace
+      container_name: factset
       build:
         context: ./env/docker/workspace
         args:
@@ -21,11 +21,11 @@ services:
         - ~/.aws:/home/laradock/.aws
       tty: true
       networks:
-        - your_project_network
+        - factset_network
 
 # PHP-FPM
     php-fpm:
-      container_name: your_project_php_fpm
+      container_name: factset_php_fpm
       build:
         context: ./env/docker/php-fpm
         args:
@@ -38,11 +38,11 @@ services:
       depends_on:
         - workspace
       networks:
-        - your_project_network
+        - factset_network
 
 # NGINX
     nginx:
-      container_name: your_project_nginx
+      container_name: factset_nginx
       build:
         context: ./env/docker/nginx
       volumes:
@@ -56,11 +56,11 @@ services:
       ports:
         - 80:80
       networks:
-        - your_project_network
+        - factset_network
 
 # PostgreSQL
     postgres:
-      container_name: your_project_postgres
+      container_name: factset_postgres
       build:
         context: ./env/docker/postgres
       volumes:
@@ -69,16 +69,18 @@ services:
         - POSTGRES_DB=${POSTGRES_DB}
         - POSTGRES_USER=${POSTGRES_USER}
         - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      ports:
+        - ${POSTGRES_PORT}:5432
       networks:
-        - your_project_network
+        - factset_network
 
 # Redis
     redis:
-      container_name: your_project_redis
+      container_name: factset_redis
       image: "redis"
-      hostname: your_project_redis
+      hostname: factset_redis
       networks:
-        - your_project_network
+        - factset_network
 
 # Volumes configuration
 volumes:
@@ -87,5 +89,5 @@ volumes:
 
 # Network configuration
 networks:
-  your_project_network:
-    name: your_project_network
+  factset_network:
+    name: factset_network
